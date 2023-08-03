@@ -1,15 +1,25 @@
+import {useState} from 'react'
 
 type ListItemProps = {
     id: number;
     done: boolean;
     text: string;
-    changeHandler: (id:number) => void
+    checkboxHandler: (id:number) => void
+    deleteHandler: (id:number) => void
 }
 
 
 function ListItem (props: ListItemProps){
+
+    const [hover, setHover]= useState<boolean>(false)
+
     return(
-    <input type="checkbox" checked={props.done} onChange = {() => props.changeHandler(props.id)} />
+        <div className="list-item" onMouseOver={()=>setHover(true)} onMouseOut={()=>setHover(false)} >
+            <input type="checkbox" checked={props.done} onChange = {() => props.checkboxHandler(props.id)} />
+            <p>{props.text}</p>
+            {hover && <button className='remove' onClick={()=> props.deleteHandler(props.id)}>Remove</button>}
+        </div>
+
     )
 
 }
