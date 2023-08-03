@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {ListItem, ListItemProps} from './ListItem'
+import {ListItem} from './ListItem'
 import Input from './Input.tsx'
 
 export default function App (){
@@ -48,8 +48,6 @@ export default function App (){
             })
         }
 
-        console.log(statusHandler)
-        console.log(JSON.stringify(statusHandler))
     const allItemsJSX : JSX.Element[] = allItems.map(i => {
         return(
             <ListItem 
