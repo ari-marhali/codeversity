@@ -1,7 +1,7 @@
 body{
     background: #212329;
     margin:0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 #app{
@@ -41,11 +41,17 @@ h1{
 #text-field{
     display: flex;
     align-items: center;
-    border: none;
+    border: 1px solid black;
     font-size: 20px;
     width:70%;
     padding: 5px 10px;
     border-radius: 2px;
+    box-shadow: 2px 2px 2px black;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#text-field:focus{
+    outline-color:#79CAFF;
 }
 
 #add-btn{
@@ -58,8 +64,9 @@ h1{
     border: 2px solid white;
     color: white;
     text-shadow: 1px 1px 1px black;
-    font-size:16px;
+    font-size:18px;
     letter-spacing: 1px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 #add-btn:hover{
@@ -69,19 +76,48 @@ h1{
 #items{
     width: 90%;
     border: 2px solid black;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 2px 2px 2px 1px black;
 }
 
 .list-item{
-    background: white;
+    background-color: #4a5667;
     display: flex;
-    margin:20px
-    
+    justify-content: center;
+    margin:20px;
+    border-radius:8px;
+    border: 1px solid white;
 }
 
-#done-btn:hover{
+#checkbox{
+    display: flex;
+    align-items: center;
+   
+}
+
+#done-btn{
+    opacity: 0;
     cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+#item-txt{
+    margin: 10px auto;
+    font-size: 20px;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+#remove-btn{
+    font-size: 20px;
+    background-color: #A30000;
+    border-radius: 8px;
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid black;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 #remove-btn:hover{
