@@ -1,9 +1,11 @@
 import {useState} from 'react'
 
 type ListItemProps = {
-    id: number;
-    done: boolean;
-    text: string;
+    item:{
+        id: number;
+        done: boolean;
+        text: string;
+    }
     checkboxHandler: (id:number) => void
     deleteHandler: (id:number) => void
 }
@@ -15,9 +17,9 @@ function ListItem (props: ListItemProps){
 
     return(
         <div className="list-item" onMouseOver={()=>setHover(true)} onMouseOut={()=>setHover(false)} >
-            <input type="checkbox" checked={props.done} onChange = {() => props.checkboxHandler(props.id)} />
-            <p>{props.text}</p>
-            {hover && <button className='remove' onClick={()=> props.deleteHandler(props.id)}>Remove</button>}
+            <input type="checkbox" checked={props.item.done} onChange = {() => props.checkboxHandler(props.item.id)} />
+            <p>{props.item.text}</p>
+            {hover && <button className='remove' onClick={()=> props.deleteHandler(props.item.id)}>Remove</button>}
         </div>
 
     )
