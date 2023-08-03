@@ -1,9 +1,89 @@
 body{
     background: #212329;
+    margin:0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#root{
+#app{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#navbar{
+    background: #4a5667;
+    display: flex;
+    align-items: center;
+    color: white;
+    box-shadow: 0px 5px 5px black;
+    padding: 5px 15px;
+    text-shadow: 1px 1px 1px black;
+    width: 100%;
+}
+
+#icon{
+    width: 60px;
+}
+
+h1{
+    margin: 0px auto;
+}
+
+#add-form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width:100%;
+    margin:50px 0;
+}
+
+#text-field{
+    display: flex;
+    align-items: center;
+    border: none;
+    font-size: 20px;
+    width:70%;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+#add-btn{
+    margin:15px;
+    background: #79CAFF;
+    width: 20%;
+    padding: 5px 0;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    font-size:16px;
+    letter-spacing: 1px;
+}
+
+#add-btn:hover{
+    cursor: pointer;
+}
+
+#items{
+    width: 90%;
+    border: 2px solid black;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 1px black;
+}
+
+.list-item{
+    background: white;
+    display: flex;
+    margin:20px
+    
+}
+
+#done-btn:hover{
+    cursor: pointer;
+}
+
+#remove-btn:hover{
+    cursor: pointer;
 }

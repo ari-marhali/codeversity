@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import {ListItem} from './ListItem'
 import Input from './Input.tsx'
+import Navbar from './Navbar.tsx'
 
 export default function App (){
 
@@ -11,8 +12,6 @@ export default function App (){
     }
 
     const [allItems , setItems] = useState<ListItem[]>(JSON.parse(localStorage.getItem('allItems') || '[]'))
-
-    console.log(allItems)
     
       useEffect(() => {
         localStorage.setItem('allItems', JSON.stringify(allItems))
@@ -36,7 +35,7 @@ export default function App (){
         }
 
         function addItem (text : string){
-            setItems(prevItems => {
+            text&& setItems(prevItems => {
                 return(
                     [{
                         id: !allItems.length? 1 : (allItems[0].id +1 ),
@@ -60,9 +59,13 @@ export default function App (){
     })
 
     return(
-        <div>
+        <div id='app'>
+            <Navbar/>
             <Input addFunction={addItem}/>
-            {allItemsJSX}
+            {allItems[0] && 
+            <div id='items'>
+                {allItemsJSX}
+            </div>}
         </div>
     )
 }
