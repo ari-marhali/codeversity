@@ -17,9 +17,10 @@ function ListItem (props: ListItemProps){
 
     return(
         <div className="list-item" onMouseOver={()=>setHover(true)} onMouseOut={()=>setHover(false)} >
-            <div id='checkbox'> 
+            <label id='checkbox'> 
                 <input type="checkbox" id='done-btn' checked={props.item.done} onChange = {() => props.checkboxHandler(props.item.id)} />
-            </div>
+                <span id='checkmark'></span>
+            </label>
             <p id='item-txt'>{props.item.text}</p>
             {hover && <button id='remove-btn' onClick={()=> props.deleteHandler(props.item.id)}>🗑️</button>}
         </div>
