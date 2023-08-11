@@ -14,9 +14,9 @@ export const Navbar = () => {
       boxShadow="0 2px 5px #2b2d42"
       p="5px 15px 5px 15px"
     >
-      <img src="./src/icon.png" width="60px" />
+      <img src="./assets/icon.png" width="60px" />
       <p style={{ margin: "auto" }}>To Do List</p>
-      <img src="./src/chakra-ui.png" width="50px" />
+      <img src="./assets/chakra-ui.png" width="50px" />
     </Flex>
   );
 };
