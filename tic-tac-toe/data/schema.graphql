@@ -1,0 +1,1094 @@
+""""""
+directive @auth(add: AuthRule, delete: AuthRule, password: AuthRule, query: AuthRule, update: AuthRule) on INTERFACE | OBJECT
+
+""""""
+directive @cacheControl(maxAge: Int!) on QUERY
+
+""""""
+directive @cascade(fields: [String]) on FIELD
+
+""""""
+directive @custom(dql: String, http: CustomHTTP) on FIELD_DEFINITION
+
+""""""
+directive @dgraph(pred: String, type: String) on FIELD_DEFINITION | INTERFACE | OBJECT
+
+""""""
+directive @generate(mutation: GenerateMutationParams, query: GenerateQueryParams, subscription: Boolean) on INTERFACE | OBJECT
+
+""""""
+directive @hasInverse(field: String!) on FIELD_DEFINITION
+
+""""""
+directive @id on FIELD_DEFINITION
+
+""""""
+directive @lambda on FIELD_DEFINITION
+
+""""""
+directive @lambdaOnMutate(add: Boolean, delete: Boolean, update: Boolean) on INTERFACE | OBJECT
+
+""""""
+directive @remote on ENUM | INPUT_OBJECT | INTERFACE | OBJECT | UNION
+
+""""""
+directive @remoteResponse(name: String) on FIELD_DEFINITION
+
+""""""
+directive @search(by: [DgraphIndex!]) on FIELD_DEFINITION
+
+""""""
+directive @secret(field: String!, pred: String) on INTERFACE | OBJECT
+
+""""""
+directive @withSubscription on FIELD_DEFINITION | INTERFACE | OBJECT
+
+""""""
+input AddFieldInput {
+  """"""
+  index: Int!
+
+  """"""
+  value: String!
+}
+
+""""""
+type AddFieldPayload {
+  """"""
+  field(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddGameBoardInput {
+  """"""
+  board: [FieldRef!]!
+}
+
+""""""
+type AddGameBoardPayload {
+  """"""
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddListItemInput {
+  """"""
+  done: Boolean!
+
+  """"""
+  text: String!
+}
+
+""""""
+type AddListItemPayload {
+  """"""
+  listItem(filter: ListItemFilter, first: Int, offset: Int, order: ListItemOrder): [ListItem]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddSavedGameInput {
+  """"""
+  game: GameBoardRef!
+}
+
+""""""
+type AddSavedGamePayload {
+  """"""
+  numUids: Int
+
+  """"""
+  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
+}
+
+""""""
+input AuthRule {
+  """"""
+  and: [AuthRule]
+
+  """"""
+  not: AuthRule
+
+  """"""
+  or: [AuthRule]
+
+  """"""
+  rule: String
+}
+
+""""""
+input ContainsFilter {
+  """"""
+  point: PointRef
+
+  """"""
+  polygon: PolygonRef
+}
+
+""""""
+input CustomHTTP {
+  """"""
+  body: String
+
+  """"""
+  forwardHeaders: [String!]
+
+  """"""
+  graphql: String
+
+  """"""
+  introspectionHeaders: [String!]
+
+  """"""
+  method: HTTPMethod!
+
+  """"""
+  mode: Mode
+
+  """"""
+  secretHeaders: [String!]
+
+  """"""
+  skipIntrospection: Boolean
+
+  """"""
+  url: String!
+}
+
+"""
+The DateTime scalar type represents date and time as a string in RFC3339 format.
+For example: "1985-04-12T23:20:50.52Z" represents 20 minutes and 50.52 seconds after the 23rd hour of April 12th, 1985 in UTC.
+"""
+scalar DateTime
+
+""""""
+input DateTimeFilter {
+  """"""
+  between: DateTimeRange
+
+  """"""
+  eq: DateTime
+
+  """"""
+  ge: DateTime
+
+  """"""
+  gt: DateTime
+
+  """"""
+  in: [DateTime]
+
+  """"""
+  le: DateTime
+
+  """"""
+  lt: DateTime
+}
+
+""""""
+input DateTimeRange {
+  """"""
+  max: DateTime!
+
+  """"""
+  min: DateTime!
+}
+
+""""""
+type DeleteFieldPayload {
+  """"""
+  field(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteGameBoardPayload {
+  """"""
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteListItemPayload {
+  """"""
+  listItem(filter: ListItemFilter, first: Int, offset: Int, order: ListItemOrder): [ListItem]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteSavedGamePayload {
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+
+  """"""
+  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
+}
+
+""""""
+enum DgraphIndex {
+  """"""
+  bool
+
+  """"""
+  day
+
+  """"""
+  exact
+
+  """"""
+  float
+
+  """"""
+  fulltext
+
+  """"""
+  geo
+
+  """"""
+  hash
+
+  """"""
+  hour
+
+  """"""
+  int
+
+  """"""
+  int64
+
+  """"""
+  month
+
+  """"""
+  regexp
+
+  """"""
+  term
+
+  """"""
+  trigram
+
+  """"""
+  year
+}
+
+""""""
+type Field {
+  """"""
+  id: ID!
+
+  """"""
+  index: Int!
+
+  """"""
+  value: String!
+}
+
+""""""
+type FieldAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  indexAvg: Float
+
+  """"""
+  indexMax: Int
+
+  """"""
+  indexMin: Int
+
+  """"""
+  indexSum: Int
+
+  """"""
+  valueMax: String
+
+  """"""
+  valueMin: String
+}
+
+""""""
+input FieldFilter {
+  """"""
+  and: [FieldFilter]
+
+  """"""
+  has: [FieldHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: FieldFilter
+
+  """"""
+  or: [FieldFilter]
+}
+
+""""""
+enum FieldHasFilter {
+  """"""
+  index
+
+  """"""
+  value
+}
+
+""""""
+input FieldOrder {
+  """"""
+  asc: FieldOrderable
+
+  """"""
+  desc: FieldOrderable
+
+  """"""
+  then: FieldOrder
+}
+
+""""""
+enum FieldOrderable {
+  """"""
+  index
+
+  """"""
+  value
+}
+
+""""""
+input FieldPatch {
+  """"""
+  index: Int
+
+  """"""
+  value: String
+}
+
+""""""
+input FieldRef {
+  """"""
+  id: ID
+
+  """"""
+  index: Int
+
+  """"""
+  value: String
+}
+
+""""""
+input FloatFilter {
+  """"""
+  between: FloatRange
+
+  """"""
+  eq: Float
+
+  """"""
+  ge: Float
+
+  """"""
+  gt: Float
+
+  """"""
+  in: [Float]
+
+  """"""
+  le: Float
+
+  """"""
+  lt: Float
+}
+
+""""""
+input FloatRange {
+  """"""
+  max: Float!
+
+  """"""
+  min: Float!
+}
+
+""""""
+type GameBoard {
+  """"""
+  board(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field!]!
+
+  """"""
+  boardAggregate(filter: FieldFilter): FieldAggregateResult
+
+  """"""
+  id: ID!
+}
+
+""""""
+type GameBoardAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input GameBoardFilter {
+  """"""
+  and: [GameBoardFilter]
+
+  """"""
+  has: [GameBoardHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: GameBoardFilter
+
+  """"""
+  or: [GameBoardFilter]
+}
+
+""""""
+enum GameBoardHasFilter {
+  """"""
+  board
+}
+
+""""""
+input GameBoardPatch {
+  """"""
+  board: [FieldRef!]
+}
+
+""""""
+input GameBoardRef {
+  """"""
+  board: [FieldRef!]
+
+  """"""
+  id: ID
+}
+
+""""""
+input GenerateMutationParams {
+  """"""
+  add: Boolean
+
+  """"""
+  delete: Boolean
+
+  """"""
+  update: Boolean
+}
+
+""""""
+input GenerateQueryParams {
+  """"""
+  aggregate: Boolean
+
+  """"""
+  get: Boolean
+
+  """"""
+  password: Boolean
+
+  """"""
+  query: Boolean
+}
+
+""""""
+enum HTTPMethod {
+  """"""
+  DELETE
+
+  """"""
+  GET
+
+  """"""
+  PATCH
+
+  """"""
+  POST
+
+  """"""
+  PUT
+}
+
+"""
+The Int64 scalar type represents a signed 64‐bit numeric non‐fractional value.
+Int64 can represent values in range [-(2^63),(2^63 - 1)].
+"""
+scalar Int64
+
+""""""
+input Int64Filter {
+  """"""
+  between: Int64Range
+
+  """"""
+  eq: Int64
+
+  """"""
+  ge: Int64
+
+  """"""
+  gt: Int64
+
+  """"""
+  in: [Int64]
+
+  """"""
+  le: Int64
+
+  """"""
+  lt: Int64
+}
+
+""""""
+input Int64Range {
+  """"""
+  max: Int64!
+
+  """"""
+  min: Int64!
+}
+
+""""""
+input IntersectsFilter {
+  """"""
+  multiPolygon: MultiPolygonRef
+
+  """"""
+  polygon: PolygonRef
+}
+
+""""""
+input IntFilter {
+  """"""
+  between: IntRange
+
+  """"""
+  eq: Int
+
+  """"""
+  ge: Int
+
+  """"""
+  gt: Int
+
+  """"""
+  in: [Int]
+
+  """"""
+  le: Int
+
+  """"""
+  lt: Int
+}
+
+""""""
+input IntRange {
+  """"""
+  max: Int!
+
+  """"""
+  min: Int!
+}
+
+""""""
+type ListItem {
+  """"""
+  done: Boolean!
+
+  """"""
+  id: ID!
+
+  """"""
+  text: String!
+}
+
+""""""
+type ListItemAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  textMax: String
+
+  """"""
+  textMin: String
+}
+
+""""""
+input ListItemFilter {
+  """"""
+  and: [ListItemFilter]
+
+  """"""
+  has: [ListItemHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: ListItemFilter
+
+  """"""
+  or: [ListItemFilter]
+}
+
+""""""
+enum ListItemHasFilter {
+  """"""
+  done
+
+  """"""
+  text
+}
+
+""""""
+input ListItemOrder {
+  """"""
+  asc: ListItemOrderable
+
+  """"""
+  desc: ListItemOrderable
+
+  """"""
+  then: ListItemOrder
+}
+
+""""""
+enum ListItemOrderable {
+  """"""
+  text
+}
+
+""""""
+input ListItemPatch {
+  """"""
+  done: Boolean
+
+  """"""
+  text: String
+}
+
+""""""
+input ListItemRef {
+  """"""
+  done: Boolean
+
+  """"""
+  id: ID
+
+  """"""
+  text: String
+}
+
+""""""
+enum Mode {
+  """"""
+  BATCH
+
+  """"""
+  SINGLE
+}
+
+""""""
+type MultiPolygon {
+  """"""
+  polygons: [Polygon!]!
+}
+
+""""""
+input MultiPolygonRef {
+  """"""
+  polygons: [PolygonRef!]!
+}
+
+""""""
+type Mutation {
+  """"""
+  addField(input: [AddFieldInput!]!): AddFieldPayload
+
+  """"""
+  addGameBoard(input: [AddGameBoardInput!]!): AddGameBoardPayload
+
+  """"""
+  addListItem(input: [AddListItemInput!]!): AddListItemPayload
+
+  """"""
+  addSavedGame(input: [AddSavedGameInput!]!): AddSavedGamePayload
+
+  """"""
+  deleteField(filter: FieldFilter!): DeleteFieldPayload
+
+  """"""
+  deleteGameBoard(filter: GameBoardFilter!): DeleteGameBoardPayload
+
+  """"""
+  deleteListItem(filter: ListItemFilter!): DeleteListItemPayload
+
+  """"""
+  deleteSavedGame(filter: SavedGameFilter!): DeleteSavedGamePayload
+
+  """"""
+  updateField(input: UpdateFieldInput!): UpdateFieldPayload
+
+  """"""
+  updateGameBoard(input: UpdateGameBoardInput!): UpdateGameBoardPayload
+
+  """"""
+  updateListItem(input: UpdateListItemInput!): UpdateListItemPayload
+
+  """"""
+  updateSavedGame(input: UpdateSavedGameInput!): UpdateSavedGamePayload
+}
+
+""""""
+input NearFilter {
+  """"""
+  coordinate: PointRef!
+
+  """"""
+  distance: Float!
+}
+
+""""""
+type Point {
+  """"""
+  latitude: Float!
+
+  """"""
+  longitude: Float!
+}
+
+""""""
+input PointGeoFilter {
+  """"""
+  near: NearFilter
+
+  """"""
+  within: WithinFilter
+}
+
+""""""
+type PointList {
+  """"""
+  points: [Point!]!
+}
+
+""""""
+input PointListRef {
+  """"""
+  points: [PointRef!]!
+}
+
+""""""
+input PointRef {
+  """"""
+  latitude: Float!
+
+  """"""
+  longitude: Float!
+}
+
+""""""
+type Polygon {
+  """"""
+  coordinates: [PointList!]!
+}
+
+""""""
+input PolygonGeoFilter {
+  """"""
+  contains: ContainsFilter
+
+  """"""
+  intersects: IntersectsFilter
+
+  """"""
+  near: NearFilter
+
+  """"""
+  within: WithinFilter
+}
+
+""""""
+input PolygonRef {
+  """"""
+  coordinates: [PointListRef!]!
+}
+
+""""""
+type Query {
+  """"""
+  aggregateField(filter: FieldFilter): FieldAggregateResult
+
+  """"""
+  aggregateGameBoard(filter: GameBoardFilter): GameBoardAggregateResult
+
+  """"""
+  aggregateListItem(filter: ListItemFilter): ListItemAggregateResult
+
+  """"""
+  aggregateSavedGame(filter: SavedGameFilter): SavedGameAggregateResult
+
+  """"""
+  getField(id: ID!): Field
+
+  """"""
+  getGameBoard(id: ID!): GameBoard
+
+  """"""
+  getListItem(id: ID!): ListItem
+
+  """"""
+  getSavedGame(id: ID!): SavedGame
+
+  """"""
+  queryField(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field]
+
+  """"""
+  queryGameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+
+  """"""
+  queryListItem(filter: ListItemFilter, first: Int, offset: Int, order: ListItemOrder): [ListItem]
+
+  """"""
+  querySavedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
+}
+
+""""""
+type SavedGame {
+  """"""
+  game(filter: GameBoardFilter): GameBoard!
+
+  """"""
+  id: ID!
+}
+
+""""""
+type SavedGameAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input SavedGameFilter {
+  """"""
+  and: [SavedGameFilter]
+
+  """"""
+  has: [SavedGameHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: SavedGameFilter
+
+  """"""
+  or: [SavedGameFilter]
+}
+
+""""""
+enum SavedGameHasFilter {
+  """"""
+  game
+}
+
+""""""
+input SavedGamePatch {
+  """"""
+  game: GameBoardRef
+}
+
+""""""
+input SavedGameRef {
+  """"""
+  game: GameBoardRef
+
+  """"""
+  id: ID
+}
+
+""""""
+input StringExactFilter {
+  """"""
+  between: StringRange
+
+  """"""
+  eq: String
+
+  """"""
+  ge: String
+
+  """"""
+  gt: String
+
+  """"""
+  in: [String]
+
+  """"""
+  le: String
+
+  """"""
+  lt: String
+}
+
+""""""
+input StringFullTextFilter {
+  """"""
+  alloftext: String
+
+  """"""
+  anyoftext: String
+}
+
+""""""
+input StringHashFilter {
+  """"""
+  eq: String
+
+  """"""
+  in: [String]
+}
+
+""""""
+input StringRange {
+  """"""
+  max: String!
+
+  """"""
+  min: String!
+}
+
+""""""
+input StringRegExpFilter {
+  """"""
+  regexp: String
+}
+
+""""""
+input StringTermFilter {
+  """"""
+  allofterms: String
+
+  """"""
+  anyofterms: String
+}
+
+""""""
+input UpdateFieldInput {
+  """"""
+  filter: FieldFilter!
+
+  """"""
+  remove: FieldPatch
+
+  """"""
+  set: FieldPatch
+}
+
+""""""
+type UpdateFieldPayload {
+  """"""
+  field(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateGameBoardInput {
+  """"""
+  filter: GameBoardFilter!
+
+  """"""
+  remove: GameBoardPatch
+
+  """"""
+  set: GameBoardPatch
+}
+
+""""""
+type UpdateGameBoardPayload {
+  """"""
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateListItemInput {
+  """"""
+  filter: ListItemFilter!
+
+  """"""
+  remove: ListItemPatch
+
+  """"""
+  set: ListItemPatch
+}
+
+""""""
+type UpdateListItemPayload {
+  """"""
+  listItem(filter: ListItemFilter, first: Int, offset: Int, order: ListItemOrder): [ListItem]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateSavedGameInput {
+  """"""
+  filter: SavedGameFilter!
+
+  """"""
+  remove: SavedGamePatch
+
+  """"""
+  set: SavedGamePatch
+}
+
+""""""
+type UpdateSavedGamePayload {
+  """"""
+  numUids: Int
+
+  """"""
+  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
+}
+
+""""""
+input WithinFilter {
+  """"""
+  polygon: PolygonRef!
+}

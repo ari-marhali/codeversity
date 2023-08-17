@@ -1,0 +1,6 @@
+schema:
+  - "https://nameless-brook-490009.eu-central-1.aws.cloud.dgraph.io/graphql"
+generates:
+  "data/schema.graphql":
+    plugins:
+      - schema-ast
