@@ -1,9 +1,10 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type GameRunningProps = {
   newGame: () => void;
+  saveGameHandler: () => void;
 };
 export const GameRunning: React.FC<GameRunningProps> = (props) => (
   <Flex w="100%" align="center" justify="center">
@@ -14,7 +15,7 @@ export const GameRunning: React.FC<GameRunningProps> = (props) => (
       bg="#fdf0d5"
       variant="solid"
       color="#003049"
-      ml="30px"
+      mr="5%"
       w="20%"
       boxShadow="0 0 4px 1px black"
       borderRadius="8px"
@@ -23,6 +24,23 @@ export const GameRunning: React.FC<GameRunningProps> = (props) => (
       onClick={() => props.newGame()}
     >
       Restart
+    </Button>
+    <Button
+      rightIcon={
+        <FontAwesomeIcon icon={faFloppyDisk} style={{ color: "#003049" }} />
+      }
+      bg="#fdf0d5"
+      variant="solid"
+      color="#003049"
+      ml="5%"
+      w="20%"
+      boxShadow="0 0 4px 1px black"
+      borderRadius="8px"
+      fontSize="2vh"
+      _hover={{ boxShadow: "0 0 5px 2px black" }}
+      onClick={() => props.saveGameHandler()}
+    >
+      Save
     </Button>
   </Flex>
 );

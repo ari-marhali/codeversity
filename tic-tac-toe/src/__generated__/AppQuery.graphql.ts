@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16002970d0fa279ab0b0b69b21c68b3f>>
+ * @generated SignedSource<<ebdbb094ba324f2042fd61db832b77c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,15 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AppQuery$variables = {};
 export type AppQuery$data = {
-  readonly queryListItem: ReadonlyArray<{
-    readonly done: boolean;
-    readonly id: string;
-    readonly text: string;
-  } | null> | null;
+  readonly getGameBoard: {
+    readonly board: ReadonlyArray<{
+      readonly index: number;
+      readonly value: string;
+    }>;
+    readonly player: boolean;
+    readonly size: number;
+    readonly used: number;
+  } | null;
 };
 export type AppQuery = {
   response: AppQuery$data;
@@ -25,45 +29,97 @@ export type AppQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
-    "args": null,
-    "concreteType": "ListItem",
-    "kind": "LinkedField",
-    "name": "queryListItem",
-    "plural": true,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "text",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "done",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Literal",
+    "name": "id",
+    "value": "0x1a4fdbe950"
   }
-];
+],
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "order",
+    "value": {
+      "asc": "index"
+    }
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "index",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "player",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "size",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "used",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "AppQuery",
-    "selections": (v0/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "GameBoard",
+        "kind": "LinkedField",
+        "name": "getGameBoard",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "Field",
+            "kind": "LinkedField",
+            "name": "board",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": "board(order:{\"asc\":\"index\"})"
+          },
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/)
+        ],
+        "storageKey": "getGameBoard(id:\"0x1a4fdbe950\")"
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -72,19 +128,49 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "AppQuery",
-    "selections": (v0/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "GameBoard",
+        "kind": "LinkedField",
+        "name": "getGameBoard",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "Field",
+            "kind": "LinkedField",
+            "name": "board",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v7/*: any*/)
+            ],
+            "storageKey": "board(order:{\"asc\":\"index\"})"
+          },
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/),
+          (v7/*: any*/)
+        ],
+        "storageKey": "getGameBoard(id:\"0x1a4fdbe950\")"
+      }
+    ]
   },
   "params": {
-    "cacheID": "18caa39a95ad0554cc5f678fc915c87a",
+    "cacheID": "5f08f4c50ed9d272ac0c75b652d378b2",
     "id": null,
     "metadata": {},
     "name": "AppQuery",
     "operationKind": "query",
-    "text": "query AppQuery {\n  queryListItem {\n    id\n    text\n    done\n  }\n}\n"
+    "text": "query AppQuery {\n  getGameBoard(id: \"0x1a4fdbe950\") {\n    board(order: {asc: index}) {\n      index\n      value\n      id\n    }\n    player\n    size\n    used\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b5be9c099e858419a40fd3c8a1edf152";
+(node as any).hash = "5d0b73d1e12239740f25b45b673fd682";
 
 export default node;

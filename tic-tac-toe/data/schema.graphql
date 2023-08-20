@@ -65,12 +65,21 @@ type AddFieldPayload {
 input AddGameBoardInput {
   """"""
   board: [FieldRef!]!
+
+  """"""
+  player: Boolean!
+
+  """"""
+  size: Int!
+
+  """"""
+  used: Int!
 }
 
 """"""
 type AddGameBoardPayload {
   """"""
-  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int, order: GameBoardOrder): [GameBoard]
 
   """"""
   numUids: Int
@@ -92,21 +101,6 @@ type AddListItemPayload {
 
   """"""
   numUids: Int
-}
-
-""""""
-input AddSavedGameInput {
-  """"""
-  game: GameBoardRef!
-}
-
-""""""
-type AddSavedGamePayload {
-  """"""
-  numUids: Int
-
-  """"""
-  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
 }
 
 """"""
@@ -217,7 +211,7 @@ type DeleteFieldPayload {
 """"""
 type DeleteGameBoardPayload {
   """"""
-  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int, order: GameBoardOrder): [GameBoard]
 
   """"""
   msg: String
@@ -236,18 +230,6 @@ type DeleteListItemPayload {
 
   """"""
   numUids: Int
-}
-
-""""""
-type DeleteSavedGamePayload {
-  """"""
-  msg: String
-
-  """"""
-  numUids: Int
-
-  """"""
-  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
 }
 
 """"""
@@ -446,12 +428,45 @@ type GameBoard {
 
   """"""
   id: ID!
+
+  """"""
+  player: Boolean!
+
+  """"""
+  size: Int!
+
+  """"""
+  used: Int!
 }
 
 """"""
 type GameBoardAggregateResult {
   """"""
   count: Int
+
+  """"""
+  sizeAvg: Float
+
+  """"""
+  sizeMax: Int
+
+  """"""
+  sizeMin: Int
+
+  """"""
+  sizeSum: Int
+
+  """"""
+  usedAvg: Float
+
+  """"""
+  usedMax: Int
+
+  """"""
+  usedMin: Int
+
+  """"""
+  usedSum: Int
 }
 
 """"""
@@ -476,12 +491,51 @@ input GameBoardFilter {
 enum GameBoardHasFilter {
   """"""
   board
+
+  """"""
+  player
+
+  """"""
+  size
+
+  """"""
+  used
+}
+
+""""""
+input GameBoardOrder {
+  """"""
+  asc: GameBoardOrderable
+
+  """"""
+  desc: GameBoardOrderable
+
+  """"""
+  then: GameBoardOrder
+}
+
+""""""
+enum GameBoardOrderable {
+  """"""
+  size
+
+  """"""
+  used
 }
 
 """"""
 input GameBoardPatch {
   """"""
   board: [FieldRef!]
+
+  """"""
+  player: Boolean
+
+  """"""
+  size: Int
+
+  """"""
+  used: Int
 }
 
 """"""
@@ -491,6 +545,15 @@ input GameBoardRef {
 
   """"""
   id: ID
+
+  """"""
+  player: Boolean
+
+  """"""
+  size: Int
+
+  """"""
+  used: Int
 }
 
 """"""
@@ -742,9 +805,6 @@ type Mutation {
   addListItem(input: [AddListItemInput!]!): AddListItemPayload
 
   """"""
-  addSavedGame(input: [AddSavedGameInput!]!): AddSavedGamePayload
-
-  """"""
   deleteField(filter: FieldFilter!): DeleteFieldPayload
 
   """"""
@@ -754,9 +814,6 @@ type Mutation {
   deleteListItem(filter: ListItemFilter!): DeleteListItemPayload
 
   """"""
-  deleteSavedGame(filter: SavedGameFilter!): DeleteSavedGamePayload
-
-  """"""
   updateField(input: UpdateFieldInput!): UpdateFieldPayload
 
   """"""
@@ -764,9 +821,6 @@ type Mutation {
 
   """"""
   updateListItem(input: UpdateListItemInput!): UpdateListItemPayload
-
-  """"""
-  updateSavedGame(input: UpdateSavedGameInput!): UpdateSavedGamePayload
 }
 
 """"""
@@ -856,9 +910,6 @@ type Query {
   aggregateListItem(filter: ListItemFilter): ListItemAggregateResult
 
   """"""
-  aggregateSavedGame(filter: SavedGameFilter): SavedGameAggregateResult
-
-  """"""
   getField(id: ID!): Field
 
   """"""
@@ -868,73 +919,13 @@ type Query {
   getListItem(id: ID!): ListItem
 
   """"""
-  getSavedGame(id: ID!): SavedGame
-
-  """"""
   queryField(filter: FieldFilter, first: Int, offset: Int, order: FieldOrder): [Field]
 
   """"""
-  queryGameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+  queryGameBoard(filter: GameBoardFilter, first: Int, offset: Int, order: GameBoardOrder): [GameBoard]
 
   """"""
   queryListItem(filter: ListItemFilter, first: Int, offset: Int, order: ListItemOrder): [ListItem]
-
-  """"""
-  querySavedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
-}
-
-""""""
-type SavedGame {
-  """"""
-  game(filter: GameBoardFilter): GameBoard!
-
-  """"""
-  id: ID!
-}
-
-""""""
-type SavedGameAggregateResult {
-  """"""
-  count: Int
-}
-
-""""""
-input SavedGameFilter {
-  """"""
-  and: [SavedGameFilter]
-
-  """"""
-  has: [SavedGameHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: SavedGameFilter
-
-  """"""
-  or: [SavedGameFilter]
-}
-
-""""""
-enum SavedGameHasFilter {
-  """"""
-  game
-}
-
-""""""
-input SavedGamePatch {
-  """"""
-  game: GameBoardRef
-}
-
-""""""
-input SavedGameRef {
-  """"""
-  game: GameBoardRef
-
-  """"""
-  id: ID
 }
 
 """"""
@@ -1039,7 +1030,7 @@ input UpdateGameBoardInput {
 """"""
 type UpdateGameBoardPayload {
   """"""
-  gameBoard(filter: GameBoardFilter, first: Int, offset: Int): [GameBoard]
+  gameBoard(filter: GameBoardFilter, first: Int, offset: Int, order: GameBoardOrder): [GameBoard]
 
   """"""
   numUids: Int
@@ -1064,27 +1055,6 @@ type UpdateListItemPayload {
 
   """"""
   numUids: Int
-}
-
-""""""
-input UpdateSavedGameInput {
-  """"""
-  filter: SavedGameFilter!
-
-  """"""
-  remove: SavedGamePatch
-
-  """"""
-  set: SavedGamePatch
-}
-
-""""""
-type UpdateSavedGamePayload {
-  """"""
-  numUids: Int
-
-  """"""
-  savedGame(filter: SavedGameFilter, first: Int, offset: Int): [SavedGame]
 }
 
 """"""

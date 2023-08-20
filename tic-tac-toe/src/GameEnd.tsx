@@ -14,7 +14,6 @@ export const GameEnd: React.FC<GameEndProps> = (props) => (
       bg="#fdf0d5"
       variant="solid"
       color="#003049"
-      ml="30px"
       w="30%"
       boxShadow="0 0 4px 1px black"
       borderRadius="8px"

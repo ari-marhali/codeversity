@@ -30,7 +30,7 @@ export const GameState: React.FC<GameStateProps> = (props) => (
       textShadow="0 0 1px #fdf0d5"
     >
       {!props.started
-        ? "Select Size"
+        ? "Start Game?"
         : props.gameWon
         ? `Player ${props.player ? 1 : 2} won! 🏆`
         : props.full

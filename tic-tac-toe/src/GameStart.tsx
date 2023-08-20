@@ -7,13 +7,14 @@ import {
   NumberInputField,
   NumberInputStepper,
 } from "@chakra-ui/react";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type GameStartProps = {
   size: number;
   changeHandler: (newSize: number) => void;
   startHandler: () => void;
+  loadGameHandler: () => void;
 };
 
 export const GameStart: React.FC<GameStartProps> = (props) => (
@@ -26,8 +27,9 @@ export const GameStart: React.FC<GameStartProps> = (props) => (
       w="20%"
       p="none"
       borderRadius="8px"
-      mr="30px"
+      mr="5%"
       _hover={{ boxShadow: "0 0 5px 2px black" }}
+      aria-labelledby="Select Size"
     >
       <NumberInputField
         textAlign="center"
@@ -49,7 +51,8 @@ export const GameStart: React.FC<GameStartProps> = (props) => (
       bg="#fdf0d5"
       variant="solid"
       color="#003049"
-      ml="30px"
+      ml="5%"
+      mr="5%"
       w="20%"
       boxShadow="0 0 4px 1px black"
       borderRadius="8px"
@@ -58,6 +61,23 @@ export const GameStart: React.FC<GameStartProps> = (props) => (
       onClick={() => props.startHandler()}
     >
       Start
+    </Button>
+    <Button
+      rightIcon={
+        <FontAwesomeIcon icon={faDownload} style={{ color: "#003049" }} />
+      }
+      bg="#fdf0d5"
+      variant="solid"
+      color="#003049"
+      ml="5%"
+      w="20%"
+      boxShadow="0 0 4px 1px black"
+      borderRadius="8px"
+      fontSize="2vh"
+      _hover={{ boxShadow: "0 0 5px 2px black" }}
+      onClick={() => props.loadGameHandler()}
+    >
+      Load
     </Button>
   </Flex>
 );

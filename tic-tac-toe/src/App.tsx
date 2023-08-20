@@ -1,31 +1,55 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { GameBoard } from "./GameBoard";
+import { Field, GameBoard } from "./GameBoard";
 import { GameState } from "./GameState";
 import { GameStart } from "./GameStart";
 import { GameEnd } from "./GameEnd";
 import { GameRunning } from "./GameRunning";
+import { graphql } from "relay-runtime";
+import { useLazyLoadQuery, useMutation } from "react-relay";
+import { initializer } from "./GameBoardUtils";
+import { AppQuery } from "./__generated__/AppQuery.graphql";
 
-/* const query = graphql`
-  query AppQuery {
-    queryListItem {
-      id
-      text
-      done
+const saveGame = graphql`
+  mutation AppMutation(
+    $player: Boolean!
+    $size: Int!
+    $used: Int!
+    $board: [FieldRef!]!
+  ) {
+    updateGameBoard(
+      input: {
+        filter: { id: "0x1a4fdbe950" }
+        set: { player: $player, size: $size, used: $used, board: $board }
+      }
+    ) {
+      gameBoard {
+        id
+        size
+        used
+        board {
+          id
+          index
+          value
+        }
+      }
     }
   }
 `;
 
-const updateListItem = graphql`
-  mutation AppMutation($id: [ID!]!, $done: Boolean!) {
-    updateListItem(input: { filter: { id: $id }, set: { done: $done } }) {
-      listItem {
-        id
-        done
+const loadGame = graphql`
+  query AppQuery {
+    getGameBoard(id: "0x1a4fdbe950") {
+      board(order: { asc: index }) {
+        index
+        value
       }
+      player
+      size
+      used
     }
   }
-`; */
+`;
 
 export const App: React.FC = () => {
   const [size, setSize] = useState(3);
@@ -33,6 +57,14 @@ export const App: React.FC = () => {
   const [used, setUsed] = useState(0);
   const [player, setPlayer] = useState(true);
   const [started, setStarted] = useState(false);
+  const [board, setBoard] = useState<Field[]>(initializer(size));
+
+  const [commitMutation, isMutationInFlight] = useMutation(saveGame);
+  const data = useLazyLoadQuery<AppQuery>(loadGame, {});
+
+  const boardSetter = (board: Field[]) => {
+    setBoard(board);
+  };
 
   const gameWonChecker = (result: boolean) => {
     setGameWon(result);
@@ -57,6 +89,27 @@ export const App: React.FC = () => {
     setStarted(false);
   };
 
+  const saveGameHandler = () => {
+    commitMutation({
+      variables: {
+        size: size,
+        used: used,
+        player: player,
+        board: board,
+      },
+    });
+  };
+
+  const loadGameHandler = () => {
+    const game = data.getGameBoard;
+    if (game) {
+      setSize(game.size);
+      setBoard([...game.board]);
+      setUsed(game.used);
+      setPlayer(game.player);
+    }
+  };
+
   return (
     <Flex
       h="100vh"
@@ -79,18 +132,22 @@ export const App: React.FC = () => {
           useHandler={useHandler}
           player={player}
           started={started}
+          used={used}
+          board={board}
+          boardSetter={boardSetter}
         />
         {started ? (
           gameWon || used === size * size ? (
             <GameEnd newGame={newGame} />
           ) : (
-            <GameRunning newGame={newGame} />
+            <GameRunning newGame={newGame} saveGameHandler={saveGameHandler} />
           )
         ) : (
           <GameStart
             size={size}
             changeHandler={sizeChange}
             startHandler={startHandler}
+            loadGameHandler={loadGameHandler}
           />
         )}
       </VStack>
