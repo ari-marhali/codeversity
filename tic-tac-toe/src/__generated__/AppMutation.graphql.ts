@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<760f3975a52147648845bbeea462a747>>
+ * @generated SignedSource<<ba01199da66c8ecb0a132865fb11a750>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,17 +21,22 @@ export type AppMutation$variables = {
   used: number;
 };
 export type AppMutation$data = {
-  readonly updateGameBoard: {
+  readonly addGameBoard: {
     readonly gameBoard: ReadonlyArray<{
       readonly board: ReadonlyArray<{
-        readonly id: string;
         readonly index: number;
         readonly value: string;
       }>;
-      readonly id: string;
+      readonly player: boolean;
       readonly size: number;
       readonly used: number;
     } | null> | null;
+  } | null;
+  readonly deleteField: {
+    readonly msg: string | null;
+  } | null;
+  readonly deleteGameBoard: {
+    readonly msg: string | null;
   } | null;
 };
 export type AppMutation = {
@@ -60,118 +65,121 @@ v3 = {
   "kind": "LocalArgument",
   "name": "used"
 },
-v4 = {
+v4 = [
+  {
+    "kind": "Literal",
+    "name": "filter",
+    "value": {}
+  }
+],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "msg",
+    "storageKey": null
+  }
+],
+v6 = {
+  "alias": null,
+  "args": (v4/*: any*/),
+  "concreteType": "DeleteFieldPayload",
+  "kind": "LinkedField",
+  "name": "deleteField",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": "deleteField(filter:{})"
+},
+v7 = {
+  "alias": null,
+  "args": (v4/*: any*/),
+  "concreteType": "DeleteGameBoardPayload",
+  "kind": "LinkedField",
+  "name": "deleteGameBoard",
+  "plural": false,
+  "selections": (v5/*: any*/),
+  "storageKey": "deleteGameBoard(filter:{})"
+},
+v8 = [
+  {
+    "fields": [
+      {
+        "kind": "Variable",
+        "name": "board",
+        "variableName": "board"
+      },
+      {
+        "kind": "Variable",
+        "name": "player",
+        "variableName": "player"
+      },
+      {
+        "kind": "Variable",
+        "name": "size",
+        "variableName": "size"
+      },
+      {
+        "kind": "Variable",
+        "name": "used",
+        "variableName": "used"
+      }
+    ],
+    "kind": "ObjectValue",
+    "name": "input"
+  }
+],
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "player",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "size",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "used",
+  "storageKey": null
+},
+v12 = [
+  {
+    "kind": "Literal",
+    "name": "order",
+    "value": {
+      "asc": "index"
+    }
+  }
+],
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "index",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v5 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "fields": [
-          {
-            "kind": "Literal",
-            "name": "filter",
-            "value": {
-              "id": "0x1a4fdbe950"
-            }
-          },
-          {
-            "fields": [
-              {
-                "kind": "Variable",
-                "name": "board",
-                "variableName": "board"
-              },
-              {
-                "kind": "Variable",
-                "name": "player",
-                "variableName": "player"
-              },
-              {
-                "kind": "Variable",
-                "name": "size",
-                "variableName": "size"
-              },
-              {
-                "kind": "Variable",
-                "name": "used",
-                "variableName": "used"
-              }
-            ],
-            "kind": "ObjectValue",
-            "name": "set"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "input"
-      }
-    ],
-    "concreteType": "UpdateGameBoardPayload",
-    "kind": "LinkedField",
-    "name": "updateGameBoard",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "GameBoard",
-        "kind": "LinkedField",
-        "name": "gameBoard",
-        "plural": true,
-        "selections": [
-          (v4/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "size",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "used",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Field",
-            "kind": "LinkedField",
-            "name": "board",
-            "plural": true,
-            "selections": [
-              (v4/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "index",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "value",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -183,7 +191,48 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "AppMutation",
-    "selections": (v5/*: any*/),
+    "selections": [
+      (v6/*: any*/),
+      (v7/*: any*/),
+      {
+        "alias": null,
+        "args": (v8/*: any*/),
+        "concreteType": "AddGameBoardPayload",
+        "kind": "LinkedField",
+        "name": "addGameBoard",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "GameBoard",
+            "kind": "LinkedField",
+            "name": "gameBoard",
+            "plural": true,
+            "selections": [
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
+              {
+                "alias": null,
+                "args": (v12/*: any*/),
+                "concreteType": "Field",
+                "kind": "LinkedField",
+                "name": "board",
+                "plural": true,
+                "selections": [
+                  (v13/*: any*/),
+                  (v14/*: any*/)
+                ],
+                "storageKey": "board(order:{\"asc\":\"index\"})"
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -197,19 +246,62 @@ return {
     ],
     "kind": "Operation",
     "name": "AppMutation",
-    "selections": (v5/*: any*/)
+    "selections": [
+      (v6/*: any*/),
+      (v7/*: any*/),
+      {
+        "alias": null,
+        "args": (v8/*: any*/),
+        "concreteType": "AddGameBoardPayload",
+        "kind": "LinkedField",
+        "name": "addGameBoard",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "GameBoard",
+            "kind": "LinkedField",
+            "name": "gameBoard",
+            "plural": true,
+            "selections": [
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
+              {
+                "alias": null,
+                "args": (v12/*: any*/),
+                "concreteType": "Field",
+                "kind": "LinkedField",
+                "name": "board",
+                "plural": true,
+                "selections": [
+                  (v13/*: any*/),
+                  (v14/*: any*/),
+                  (v15/*: any*/)
+                ],
+                "storageKey": "board(order:{\"asc\":\"index\"})"
+              },
+              (v15/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "5f6f204646f957ce3b863930ed20e5f5",
+    "cacheID": "95db21a0e821a28a2f59d159f38b563e",
     "id": null,
     "metadata": {},
     "name": "AppMutation",
     "operationKind": "mutation",
-    "text": "mutation AppMutation(\n  $player: Boolean!\n  $size: Int!\n  $used: Int!\n  $board: [FieldRef!]!\n) {\n  updateGameBoard(input: {filter: {id: \"0x1a4fdbe950\"}, set: {player: $player, size: $size, used: $used, board: $board}}) {\n    gameBoard {\n      id\n      size\n      used\n      board {\n        id\n        index\n        value\n      }\n    }\n  }\n}\n"
+    "text": "mutation AppMutation(\n  $player: Boolean!\n  $size: Int!\n  $used: Int!\n  $board: [FieldRef!]!\n) {\n  deleteField(filter: {}) {\n    msg\n  }\n  deleteGameBoard(filter: {}) {\n    msg\n  }\n  addGameBoard(input: {board: $board, size: $size, used: $used, player: $player}) {\n    gameBoard {\n      player\n      size\n      used\n      board(order: {asc: index}) {\n        index\n        value\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e45096c14c195195dae5ee08e921011b";
+(node as any).hash = "06a7e89afa3bde4e75bb19789148ee13";
 
 export default node;

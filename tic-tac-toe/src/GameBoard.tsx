@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { GameField } from "./GameField";
 import { SimpleGrid } from "@chakra-ui/react";
 import { checkGameWon, initializer } from "./GameBoardUtils";
@@ -35,10 +34,6 @@ export const GameBoard: React.FC<GameBoardProps> = (props) => {
       props.useHandler(gameWon);
     }
   };
-
-  useEffect(() => {
-    props.boardSetter(initializer(props.size));
-  }, [props.size, props.started]);
 
   return (
     <SimpleGrid

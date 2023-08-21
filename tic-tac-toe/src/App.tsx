@@ -17,18 +17,20 @@ const saveGame = graphql`
     $used: Int!
     $board: [FieldRef!]!
   ) {
-    updateGameBoard(
-      input: {
-        filter: { id: "0x1a4fdbe950" }
-        set: { player: $player, size: $size, used: $used, board: $board }
-      }
+    deleteField(filter: {}) {
+      msg
+    }
+    deleteGameBoard(filter: {}) {
+      msg
+    }
+    addGameBoard(
+      input: { board: $board, size: $size, used: $used, player: $player }
     ) {
       gameBoard {
-        id
+        player
         size
         used
-        board {
-          id
+        board(order: { asc: index }) {
           index
           value
         }
@@ -39,7 +41,7 @@ const saveGame = graphql`
 
 const loadGame = graphql`
   query AppQuery {
-    getGameBoard(id: "0x1a4fdbe950") {
+    queryGameBoard {
       board(order: { asc: index }) {
         index
         value
@@ -76,6 +78,7 @@ export const App: React.FC = () => {
   };
 
   const sizeChange = (newSize: number) => {
+    setBoard(initializer(newSize));
     setSize(newSize);
   };
 
@@ -101,15 +104,18 @@ export const App: React.FC = () => {
   };
 
   const loadGameHandler = () => {
-    const game = data.getGameBoard;
-    if (game) {
-      setSize(game.size);
-      setBoard([...game.board]);
-      setUsed(game.used);
-      setPlayer(game.player);
+    if (data.queryGameBoard) {
+      const game = data.queryGameBoard[0];
+      if (game) {
+        setSize(game.size);
+        setBoard([...game.board]);
+        setUsed(game.used);
+        setPlayer(game.player);
+        setStarted(true);
+      }
     }
   };
-
+  console.log(board);
   return (
     <Flex
       h="100vh"
@@ -140,7 +146,11 @@ export const App: React.FC = () => {
           gameWon || used === size * size ? (
             <GameEnd newGame={newGame} />
           ) : (
-            <GameRunning newGame={newGame} saveGameHandler={saveGameHandler} />
+            <GameRunning
+              newGame={newGame}
+              saveGameHandler={saveGameHandler}
+              saving={isMutationInFlight}
+            />
           )
         ) : (
           <GameStart

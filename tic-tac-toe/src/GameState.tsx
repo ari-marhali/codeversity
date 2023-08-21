@@ -28,6 +28,7 @@ export const GameState: React.FC<GameStateProps> = (props) => (
           : "#669bbc"
       }
       textShadow="0 0 1px #fdf0d5"
+      cursor="default"
     >
       {!props.started
         ? "Start Game?"

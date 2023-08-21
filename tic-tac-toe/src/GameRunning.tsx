@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type GameRunningProps = {
   newGame: () => void;
   saveGameHandler: () => void;
+  saving: boolean;
 };
 export const GameRunning: React.FC<GameRunningProps> = (props) => (
   <Flex w="100%" align="center" justify="center">
@@ -39,6 +40,7 @@ export const GameRunning: React.FC<GameRunningProps> = (props) => (
       fontSize="2vh"
       _hover={{ boxShadow: "0 0 5px 2px black" }}
       onClick={() => props.saveGameHandler()}
+      disabled={props.saving}
     >
       Save
     </Button>
