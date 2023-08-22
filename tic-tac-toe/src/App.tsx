@@ -90,6 +90,7 @@ export const App: React.FC = () => {
     setUsed(0);
     setPlayer(true);
     setStarted(false);
+    setBoard(initializer(3));
   };
 
   const saveGameHandler = () => {
