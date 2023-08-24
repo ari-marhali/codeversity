@@ -28,7 +28,6 @@ export const App: React.FC = () => {
     setFieldsUsed(0);
     setPlayer(true);
     setIsStarted(false);
-  };
 
   const saveGameHandler = () => {
     commitMutation({
