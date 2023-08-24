@@ -9,22 +9,23 @@ import {
 } from "@chakra-ui/react";
 import { faDownload, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Dispatch, SetStateAction } from "react";
 
-type GameStartProps = {
+type StartGameProps = {
   size: number;
-  changeHandler: (newSize: number) => void;
-  startHandler: () => void;
+  setSize: Dispatch<SetStateAction<number>>;
+  setIsStarted: Dispatch<SetStateAction<boolean>>;
   loadGameHandler: () => void;
 };
 
-export const GameStart: React.FC<GameStartProps> = (props) => {
+export const StartGameUI: React.FC<StartGameProps> = (props) => {
   console.log(props);
   return (
     <Flex w="100%" align="center" justify="center">
       <NumberInput
         value={props.size}
         defaultValue={3}
-        onChange={(_, value) => props.changeHandler(value)}
+        onChange={(_, value) => props.setSize(value)}
         min={3}
         boxShadow="0 0 5px 1px black"
         w="20%"
@@ -63,7 +64,7 @@ export const GameStart: React.FC<GameStartProps> = (props) => {
         borderRadius="8px"
         fontSize="2vh"
         _hover={{ boxShadow: "0 0 5px 2px black" }}
-        onClick={() => props.startHandler()}
+        onClick={() => props.setIsStarted(true)}
       >
         Start
       </Button>

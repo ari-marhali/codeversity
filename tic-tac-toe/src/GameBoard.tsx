@@ -1,6 +1,7 @@
 import { GameField } from "./GameField";
 import { SimpleGrid } from "@chakra-ui/react";
-import { checkGameWon, initializer } from "./GameBoardUtils";
+import { checkGameWon, initializer } from "./gameBoardHelpers";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export interface Field {
   index: number;
@@ -10,28 +11,28 @@ type GameBoardProps = {
   size: number;
   gameWon: boolean;
   player: boolean;
-  gameWonChecker: (result: boolean) => void;
-  useHandler: (gameWon: boolean) => void;
-  started: boolean;
+  setGameWon: Dispatch<SetStateAction<boolean>>;
+  fieldUseHandler: () => void;
+  isStarted: boolean;
   used: number;
-  board: Field[];
-  boardSetter: (board: Field[]) => void;
 };
 
 export const GameBoard: React.FC<GameBoardProps> = (props) => {
+  const [board, setBoard] = useState<Field[]>(initializer(props.size));
+
   const clickHandler = (index: number) => {
-    if (!props.board[index].value && !props.gameWon && props.started) {
-      const newBoard = props.board.map((field) =>
+    if (!board[index].value && !props.gameWon && props.isStarted) {
+      const newBoard = board.map((field) =>
         field.index === index
           ? props.player
             ? { ...field, value: "X" }
             : { ...field, value: "O" }
           : field
       );
-      props.boardSetter(newBoard);
+      setBoard(newBoard);
       const gameWon = checkGameWon(newBoard, index, props.size);
-      props.gameWonChecker(gameWon);
-      props.useHandler(gameWon);
+      props.setGameWon(gameWon);
+      props.fieldUseHandler();
     }
   };
 
@@ -42,7 +43,7 @@ export const GameBoard: React.FC<GameBoardProps> = (props) => {
       aspectRatio="1/1"
       boxShadow="0 0 5px 3px black"
     >
-      {props.board.map((field, index) => (
+      {board.map((field, index) => (
         <GameField
           key={index}
           size={props.size}

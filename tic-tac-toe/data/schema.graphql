@@ -67,13 +67,13 @@ input AddGameBoardInput {
   board: [FieldRef!]!
 
   """"""
+  fieldsUsed: Int!
+
+  """"""
   player: Boolean!
 
   """"""
   size: Int!
-
-  """"""
-  used: Int!
 }
 
 """"""
@@ -427,6 +427,9 @@ type GameBoard {
   boardAggregate(filter: FieldFilter): FieldAggregateResult
 
   """"""
+  fieldsUsed: Int!
+
+  """"""
   id: ID!
 
   """"""
@@ -434,15 +437,24 @@ type GameBoard {
 
   """"""
   size: Int!
-
-  """"""
-  used: Int!
 }
 
 """"""
 type GameBoardAggregateResult {
   """"""
   count: Int
+
+  """"""
+  fieldsUsedAvg: Float
+
+  """"""
+  fieldsUsedMax: Int
+
+  """"""
+  fieldsUsedMin: Int
+
+  """"""
+  fieldsUsedSum: Int
 
   """"""
   sizeAvg: Float
@@ -455,18 +467,6 @@ type GameBoardAggregateResult {
 
   """"""
   sizeSum: Int
-
-  """"""
-  usedAvg: Float
-
-  """"""
-  usedMax: Int
-
-  """"""
-  usedMin: Int
-
-  """"""
-  usedSum: Int
 }
 
 """"""
@@ -493,13 +493,13 @@ enum GameBoardHasFilter {
   board
 
   """"""
+  fieldsUsed
+
+  """"""
   player
 
   """"""
   size
-
-  """"""
-  used
 }
 
 """"""
@@ -517,10 +517,10 @@ input GameBoardOrder {
 """"""
 enum GameBoardOrderable {
   """"""
-  size
+  fieldsUsed
 
   """"""
-  used
+  size
 }
 
 """"""
@@ -529,19 +529,22 @@ input GameBoardPatch {
   board: [FieldRef!]
 
   """"""
+  fieldsUsed: Int
+
+  """"""
   player: Boolean
 
   """"""
   size: Int
-
-  """"""
-  used: Int
 }
 
 """"""
 input GameBoardRef {
   """"""
   board: [FieldRef!]
+
+  """"""
+  fieldsUsed: Int
 
   """"""
   id: ID
@@ -551,9 +554,6 @@ input GameBoardRef {
 
   """"""
   size: Int
-
-  """"""
-  used: Int
 }
 
 """"""

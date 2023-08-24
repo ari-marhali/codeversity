@@ -4,10 +4,10 @@ type GameStateProps = {
   player: boolean;
   gameWon: boolean;
   full: boolean;
-  started: boolean;
+  isStarted: boolean;
 };
 
-export const GameState: React.FC<GameStateProps> = (props) => (
+export const GameStateUI: React.FC<GameStateProps> = (props) => (
   <Flex
     bg="#003049"
     borderRadius="10px"
@@ -21,7 +21,7 @@ export const GameState: React.FC<GameStateProps> = (props) => (
     <Text
       fontSize="3vh"
       color={
-        (!props.gameWon && props.full) || !props.started
+        (!props.gameWon && props.full) || !props.isStarted
           ? "#fdf0d5"
           : props.player
           ? "#c1121f"
@@ -30,7 +30,7 @@ export const GameState: React.FC<GameStateProps> = (props) => (
       textShadow="0 0 1px #fdf0d5"
       cursor="default"
     >
-      {!props.started
+      {!props.isStarted
         ? "Start Game?"
         : props.gameWon
         ? `Player ${props.player ? 1 : 2} won! 🏆`

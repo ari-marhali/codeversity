@@ -1,104 +1,41 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Field, GameBoard } from "./GameBoard";
-import { GameState } from "./GameState";
-import { GameStart } from "./GameStart";
-import { GameEnd } from "./GameEnd";
-import { GameRunning } from "./GameRunning";
-import { graphql } from "relay-runtime";
+import { GameBoard } from "./GameBoard";
+import { GameStateUI } from "./GameStateUI";
 import { useLazyLoadQuery, useMutation } from "react-relay";
-import { initializer } from "./GameBoardUtils";
-import { AppQuery } from "./__generated__/AppQuery.graphql";
-
-const saveGame = graphql`
-  mutation AppMutation(
-    $player: Boolean!
-    $size: Int!
-    $used: Int!
-    $board: [FieldRef!]!
-  ) {
-    deleteField(filter: {}) {
-      msg
-    }
-    deleteGameBoard(filter: {}) {
-      msg
-    }
-    addGameBoard(
-      input: { board: $board, size: $size, used: $used, player: $player }
-    ) {
-      gameBoard {
-        player
-        size
-        used
-        board(order: { asc: index }) {
-          index
-          value
-        }
-      }
-    }
-  }
-`;
-
-const loadGame = graphql`
-  query AppQuery {
-    queryGameBoard {
-      board(order: { asc: index }) {
-        index
-        value
-      }
-      player
-      size
-      used
-    }
-  }
-`;
+import { saveGame, loadGame } from "./appHelpers";
+import { appHelpersQuery } from "./__generated__/appHelpersQuery.graphql";
+import { GameBottomUI } from "./GameBottomUI";
 
 export const App: React.FC = () => {
   const [size, setSize] = useState(3);
   const [gameWon, setGameWon] = useState(false);
-  const [used, setUsed] = useState(0);
+  const [fieldsUsed, setFieldsUsed] = useState(0);
   const [player, setPlayer] = useState(true);
-  const [started, setStarted] = useState(false);
-  const [board, setBoard] = useState<Field[]>(initializer(size));
+  const [isStarted, setIsStarted] = useState(false);
 
   const [commitMutation, isMutationInFlight] = useMutation(saveGame);
-  const data = useLazyLoadQuery<AppQuery>(loadGame, {});
+  const data = useLazyLoadQuery<appHelpersQuery>(loadGame, {});
 
-  const boardSetter = (board: Field[]) => {
-    setBoard(board);
+  const fieldUseHandler = () => {
+    setFieldsUsed((prevFieldsUsed) => prevFieldsUsed + 1);
+    setPlayer((prevPlayer) => !prevPlayer);
   };
-
-  const gameWonChecker = (result: boolean) => {
-    setGameWon(result);
-  };
-
-  const useHandler = (gameWon: boolean) => {
-    setUsed((prevUsed) => prevUsed + 1);
-    !gameWon && setPlayer((prevPlayer) => !prevPlayer);
-  };
-
-  const sizeChange = (newSize: number) => {
-    setBoard(initializer(newSize));
-    setSize(newSize);
-  };
-
-  const startHandler = () => setStarted(true);
 
   const newGame = () => {
     setSize(3);
     setGameWon(false);
-    setUsed(0);
+    setFieldsUsed(0);
     setPlayer(true);
-    setStarted(false);
+    setIsStarted(false);
   };
 
   const saveGameHandler = () => {
     commitMutation({
       variables: {
         size: size,
-        used: used,
+        fieldsUsed: fieldsUsed,
         player: player,
-        board: board,
       },
     });
   };
@@ -108,14 +45,13 @@ export const App: React.FC = () => {
       const game = data.queryGameBoard[0];
       if (game) {
         setSize(game.size);
-        setBoard([...game.board]);
-        setUsed(game.used);
+        setFieldsUsed(game.fieldsUsed);
         setPlayer(game.player);
-        setStarted(true);
+        setIsStarted(true);
       }
     }
   };
-  console.log(board);
+
   return (
     <Flex
       h="100vh"
@@ -125,41 +61,33 @@ export const App: React.FC = () => {
       fontFamily="Fredoka, sans-serif"
     >
       <VStack spacing="5%" h="80%">
-        <GameState
+        <GameStateUI
           player={player}
           gameWon={gameWon}
-          full={used === size * size}
-          started={started}
+          full={fieldsUsed === size * size}
+          isStarted={isStarted}
         />
         <GameBoard
           size={size}
           gameWon={gameWon}
-          gameWonChecker={gameWonChecker}
-          useHandler={useHandler}
+          setGameWon={setGameWon}
+          fieldUseHandler={fieldUseHandler}
           player={player}
-          started={started}
-          used={used}
-          board={board}
-          boardSetter={boardSetter}
+          isStarted={isStarted}
+          used={fieldsUsed}
         />
-        {started ? (
-          gameWon || used === size * size ? (
-            <GameEnd newGame={newGame} />
-          ) : (
-            <GameRunning
-              newGame={newGame}
-              saveGameHandler={saveGameHandler}
-              saving={isMutationInFlight}
-            />
-          )
-        ) : (
-          <GameStart
-            size={size}
-            changeHandler={sizeChange}
-            startHandler={startHandler}
-            loadGameHandler={loadGameHandler}
-          />
-        )}
+        <GameBottomUI
+          isStarted={isStarted}
+          gameWon={gameWon}
+          fieldsUsed={fieldsUsed}
+          size={size}
+          newGame={newGame}
+          saveGameHandler={saveGameHandler}
+          isSaving={isMutationInFlight}
+          setSize={setSize}
+          setIsStarted={setIsStarted}
+          loadGameHandler={loadGameHandler}
+        />
       </VStack>
     </Flex>
   );

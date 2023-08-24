@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba01199da66c8ecb0a132865fb11a750>>
+ * @generated SignedSource<<5cb9654817ce70fd2094dbfbb28446d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,22 +14,22 @@ export type FieldRef = {
   index?: number | null;
   value?: string | null;
 };
-export type AppMutation$variables = {
+export type appHelpersMutation$variables = {
   board: ReadonlyArray<FieldRef>;
+  fieldsUsed: number;
   player: boolean;
   size: number;
-  used: number;
 };
-export type AppMutation$data = {
+export type appHelpersMutation$data = {
   readonly addGameBoard: {
     readonly gameBoard: ReadonlyArray<{
       readonly board: ReadonlyArray<{
         readonly index: number;
         readonly value: string;
       }>;
+      readonly fieldsUsed: number;
       readonly player: boolean;
       readonly size: number;
-      readonly used: number;
     } | null> | null;
   } | null;
   readonly deleteField: {
@@ -39,9 +39,9 @@ export type AppMutation$data = {
     readonly msg: string | null;
   } | null;
 };
-export type AppMutation = {
-  response: AppMutation$data;
-  variables: AppMutation$variables;
+export type appHelpersMutation = {
+  response: appHelpersMutation$data;
+  variables: appHelpersMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -53,17 +53,17 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "player"
+  "name": "fieldsUsed"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "size"
+  "name": "player"
 },
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "used"
+  "name": "size"
 },
 v4 = [
   {
@@ -111,6 +111,11 @@ v8 = [
       },
       {
         "kind": "Variable",
+        "name": "fieldsUsed",
+        "variableName": "fieldsUsed"
+      },
+      {
+        "kind": "Variable",
         "name": "player",
         "variableName": "player"
       },
@@ -118,11 +123,6 @@ v8 = [
         "kind": "Variable",
         "name": "size",
         "variableName": "size"
-      },
-      {
-        "kind": "Variable",
-        "name": "used",
-        "variableName": "used"
       }
     ],
     "kind": "ObjectValue",
@@ -147,7 +147,7 @@ v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "used",
+  "name": "fieldsUsed",
   "storageKey": null
 },
 v12 = [
@@ -190,7 +190,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AppMutation",
+    "name": "appHelpersMutation",
     "selections": [
       (v6/*: any*/),
       (v7/*: any*/),
@@ -239,13 +239,13 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
+      (v1/*: any*/),
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "AppMutation",
+    "name": "appHelpersMutation",
     "selections": [
       (v6/*: any*/),
       (v7/*: any*/),
@@ -292,16 +292,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "95db21a0e821a28a2f59d159f38b563e",
+    "cacheID": "9c59ffa3bffae79bebe79c90dbce916f",
     "id": null,
     "metadata": {},
-    "name": "AppMutation",
+    "name": "appHelpersMutation",
     "operationKind": "mutation",
-    "text": "mutation AppMutation(\n  $player: Boolean!\n  $size: Int!\n  $used: Int!\n  $board: [FieldRef!]!\n) {\n  deleteField(filter: {}) {\n    msg\n  }\n  deleteGameBoard(filter: {}) {\n    msg\n  }\n  addGameBoard(input: {board: $board, size: $size, used: $used, player: $player}) {\n    gameBoard {\n      player\n      size\n      used\n      board(order: {asc: index}) {\n        index\n        value\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "mutation appHelpersMutation(\n  $player: Boolean!\n  $size: Int!\n  $fieldsUsed: Int!\n  $board: [FieldRef!]!\n) {\n  deleteField(filter: {}) {\n    msg\n  }\n  deleteGameBoard(filter: {}) {\n    msg\n  }\n  addGameBoard(input: {board: $board, size: $size, fieldsUsed: $fieldsUsed, player: $player}) {\n    gameBoard {\n      player\n      size\n      fieldsUsed\n      board(order: {asc: index}) {\n        index\n        value\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "06a7e89afa3bde4e75bb19789148ee13";
+(node as any).hash = "8f060c7553ad077ed7515ff1e0b6f88f";
 
 export default node;

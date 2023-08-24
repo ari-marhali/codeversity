@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<087a3cecd446961b3f82e6f315ba8a78>>
+ * @generated SignedSource<<50cd263c96f9f90593e252226f21fd27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,21 +9,21 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type AppQuery$variables = {};
-export type AppQuery$data = {
+export type appHelpersQuery$variables = {};
+export type appHelpersQuery$data = {
   readonly queryGameBoard: ReadonlyArray<{
     readonly board: ReadonlyArray<{
       readonly index: number;
       readonly value: string;
     }>;
+    readonly fieldsUsed: number;
     readonly player: boolean;
     readonly size: number;
-    readonly used: number;
   } | null> | null;
 };
-export type AppQuery = {
-  response: AppQuery$data;
-  variables: AppQuery$variables;
+export type appHelpersQuery = {
+  response: appHelpersQuery$data;
+  variables: appHelpersQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -68,7 +68,7 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "used",
+  "name": "fieldsUsed",
   "storageKey": null
 },
 v6 = {
@@ -83,7 +83,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AppQuery",
+    "name": "appHelpersQuery",
     "selections": [
       {
         "alias": null,
@@ -120,7 +120,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "AppQuery",
+    "name": "appHelpersQuery",
     "selections": [
       {
         "alias": null,
@@ -154,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9de626f3db8d45c9937b43b1196a972d",
+    "cacheID": "96360acd696cb5a42542ce62e3f5a991",
     "id": null,
     "metadata": {},
-    "name": "AppQuery",
+    "name": "appHelpersQuery",
     "operationKind": "query",
-    "text": "query AppQuery {\n  queryGameBoard {\n    board(order: {asc: index}) {\n      index\n      value\n      id\n    }\n    player\n    size\n    used\n    id\n  }\n}\n"
+    "text": "query appHelpersQuery {\n  queryGameBoard {\n    board(order: {asc: index}) {\n      index\n      value\n      id\n    }\n    player\n    size\n    fieldsUsed\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7ae22545cd2b73ba36a8f21bbd5ea496";
+(node as any).hash = "8fd2826d5d956824cc245da196128ffd";
 
 export default node;
